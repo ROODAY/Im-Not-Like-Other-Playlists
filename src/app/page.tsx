@@ -1,13 +1,52 @@
+'use client';
+
 import Image from 'next/image'
 import styles from './page.module.css'
+import { Playlist, SpotifyApi, UserProfile } from '@spotify/web-api-ts-sdk';
+import { useEffect, useState } from 'react';
+
+// Choose one of the following:
+const sdk = SpotifyApi.withUserAuthorization(process.env.SPOTIFY_CLIENT_ID || "", process.env.REDIRECT_TARGET || "", ["playlist-read-private", "playlist-read-collaborative"]);
+
+/* stuff to do
+- make login button/flow so its not automatic
+- have playlists show name beneath image
+- have search for playlists
+- be able to select target playlist
+- be able to select
+*/
 
 export default function Home() {
+
+  const [user, setUser] = useState<UserProfile | undefined>(undefined);
+  const [playlists, setPlaylists] = useState<Playlist[]>([]);
+
+  useEffect(() => {
+    const test = async () => {
+      const user = await sdk.currentUser.profile()
+      setUser(user);
+      console.log(user)
+
+      const resPlaylists = [];
+      let res = await sdk.playlists.getUsersPlaylists(user.id, 50);
+      resPlaylists.push(...res.items);
+      while (res.next) {
+        res = await sdk.playlists.getUsersPlaylists(user.id, 50, res.offset + res.limit);
+        resPlaylists.push(...res.items);
+      }
+      console.log("last res:", res)
+      console.log(resPlaylists.map(p => p.name))
+      setPlaylists(resPlaylists);
+    }
+
+    test()
+  }, [])
+
   return (
     <main className={styles.main}>
       <div className={styles.description}>
         <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.tsx</code>
+          Hello {user?.display_name}!
         </p>
         <div>
           <a
@@ -28,15 +67,21 @@ export default function Home() {
         </div>
       </div>
 
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
+      <div className={styles.center} id={styles.playlists}>
+        {playlists.map(playlist => (
+          <div>
+            <Image
+              className={styles.logo}
+              src={playlist.images[0].url}
+              alt={`${playlist.name} cover image`}
+              width={300}
+              height={300}
+              priority
+            />
+            <p>{playlist.name}</p>
+          </div>
+
+        ))}
       </div>
 
       <div className={styles.grid}>
