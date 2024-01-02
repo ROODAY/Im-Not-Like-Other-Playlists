@@ -52,6 +52,7 @@
   background: rgba(var(--card-rgb), 0);
   border: 1px solid rgba(var(--card-border-rgb), 0);
   transition: background 200ms, border 200ms;
+  cursor: pointer;
 }
 
 .card span {
@@ -230,4 +231,20 @@
   display: flex;
   flex-wrap: wrap;
   gap: 25px;
+}
+
+#playlists>div {
+  cursor: pointer;
+}
+
+.target {
+  border: 3px solid green;
+}
+
+.check {
+  border: 3px solid purple;
+}
+
+.selected_phase {
+  border: 3px solid white;
 }
