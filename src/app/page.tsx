@@ -166,6 +166,7 @@ export default function Home() {
     }
 
     setStatusMessage("Results:")
+    setPhase("run");
     setResults(results);
   }
 
@@ -194,7 +195,7 @@ export default function Home() {
         </h2>
 
         <h2
-          className={styles.card}
+          className={styles.card + " " + (phase === "run" ? styles.selected_phase : "")}
           onClick={comparePlaylists}
         >
           Run <span>-&gt;</span>
@@ -229,48 +230,61 @@ export default function Home() {
       >
         <div className={styles.modalHeader}>
           <h1>{statusMessage}</h1>
-          <button onClick={() => setShowModal(false)}>Close</button>
+          <button onClick={() => {
+            setShowModal(false);
+            setPhase("check");
+            setResultToInspect(undefined);
+          }}>Close</button>
         </div>
 
-        <div className={styles.resultsContainer}>
-          <div>
-            {Object.values(results).map(result => {
-              const track = result!.track.track as Track;
+        {phase === "run" && (
+          <div className={styles.resultsContainer}>
+            <div>
+              {Object.values(results).map(result => {
+                const track = result!.track.track as Track;
 
-              return (
-                <div key={track.id} className={styles.resultTrack
-                  + " " + (result!.playlists.length > 1 ? styles.duped : "")
-                  + " " + (resultToInspect?.track.track.id === track.id ? styles.trackToInspect : "")}
-                  onClick={() => setResultToInspect(result)}>
-                  <Image
-                    className={styles.logo}
-                    src={track.album.images[0].url}
-                    alt={`${track.album.name} cover image`}
-                    width={64}
-                    height={64}
-                    priority
-                  />
-                  {track.name}
-                </div>
-              )
-            })}
+                return (
+                  <div key={track.id} className={styles.resultTrack
+                    + " " + (result!.playlists.length > 1 ? styles.duped : "")
+                    + " " + (resultToInspect?.track.track.id === track.id ? styles.trackToInspect : "")}
+                    onClick={() => setResultToInspect(result)}>
+                    <Image
+                      className={styles.logo}
+                      src={track.album.images[0].url}
+                      alt={`${track.album.name} cover image`}
+                      width={64}
+                      height={64}
+                      priority
+                    />
+                    {track.name}
+                  </div>
+                )
+              })}
+            </div>
+            <div>
+              {resultToInspect && resultToInspect.playlists.map(playlist => (
+                <a key={playlist.id}
+                  href={playlist.external_urls.spotify}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <div>
+                    <Image
+                      className={styles.logo}
+                      src={playlist.images[0].url}
+                      alt={`${playlist.name} cover image`}
+                      width={64}
+                      height={64}
+                      priority
+                    />
+                    {playlist.name}
+                  </div>
+                </a>
+              ))}
+            </div>
           </div>
-          <div>
-            {resultToInspect && resultToInspect.playlists.map(playlist => (
-              <div key={playlist.id} className={styles.resultTrack}>
-                <Image
-                  className={styles.logo}
-                  src={playlist.images[0].url}
-                  alt={`${playlist.name} cover image`}
-                  width={64}
-                  height={64}
-                  priority
-                />
-                {playlist.name}
-              </div>
-            ))}
-          </div>
-        </div>
+        )}
+
       </ResultModal>
     </main>
   )
