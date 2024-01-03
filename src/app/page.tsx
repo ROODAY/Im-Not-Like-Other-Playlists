@@ -140,6 +140,7 @@ export default function Home() {
       return;
     }
 
+    setPhase("run");
     setShowModal(true);
 
     setStatusMessage(`Getting tracks from target playlist: ${targetPlaylist.name}...`)
@@ -166,7 +167,6 @@ export default function Home() {
     }
 
     setStatusMessage("Results:")
-    setPhase("run");
     setResults(results);
   }
 
