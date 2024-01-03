@@ -248,3 +248,59 @@
 .selected_phase {
   border: 3px solid white;
 }
+
+.modal {
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  z-index: 9999999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  top: 0;
+  left: 0;
+}
+
+.modalContent {
+  height: 500px;
+  width: 600px;
+  overflow-y: hidden;
+  background-color: #333;
+  border-radius: 25px;
+  padding: 25px;
+}
+
+.duped {
+  background-color: red;
+}
+
+.resultTrack {
+  cursor: pointer;
+}
+
+.resultsContainer {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  padding-top: 25px;
+  padding-bottom: 25px;
+}
+
+.resultsContainer>div {
+  flex-basis: 100%;
+  overflow-y: scroll;
+  height: 100%;
+}
+
+.modalHeader {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.trackToInspect {
+  background-color: #aaa;
+  color: #333;
+}
