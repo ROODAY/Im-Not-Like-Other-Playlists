@@ -41,8 +41,11 @@
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(25%, auto));
+  justify-items: center;
+  grid-template-columns: repeat(3, minmax(33%, auto));
   max-width: 100%;
+  margin-bottom: 25px;
+  margin-top: 25px;
   width: var(--max-width);
 }
 
@@ -277,6 +280,10 @@
 
 .resultTrack {
   cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
 }
 
 .resultsContainer {
@@ -289,7 +296,7 @@
 
 .resultsContainer>div {
   flex-basis: 100%;
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: hidden;
   height: 100%;
 }
@@ -304,4 +311,10 @@
 .trackToInspect {
   background-color: #aaa;
   color: #333;
+}
+
+.searchContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }

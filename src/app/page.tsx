@@ -202,8 +202,13 @@ export default function Home() {
         </h2>
       </div>
 
-      <div>
-        Search: <input type="text" value={filterText} onChange={(e => setFilterText(e.target.value))} />
+      <div className={styles.searchContainer}>
+        <div>Search: <input type="text" value={filterText} onChange={(e => setFilterText(e.target.value))} /></div>
+        <button onClick={() => {
+          setTargetPlaylist(undefined);
+          setPlaylistsToCheck([]);
+          setPhase("target");
+        }}>Reset All Selections</button>
       </div>
 
       <div className={styles.center} id={styles.playlists}>
@@ -268,7 +273,7 @@ export default function Home() {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <div>
+                  <div className={styles.resultTrack}>
                     <Image
                       className={styles.logo}
                       src={playlist.images[0].url}
