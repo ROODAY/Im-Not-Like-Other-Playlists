@@ -23,7 +23,7 @@ module.exports = (phase, { defaultConfig }) => {
     return {
         env: {
             SPOTIFY_CLIENT_ID: '775e8b1bd8f341fe97593357e4cdf480',
-            REDIRECT_TARGET: 'http://rooday.com/Im-Not-Like-Other-Playlists/'
+            REDIRECT_TARGET: 'https://rooday.com/Im-Not-Like-Other-Playlists/'
         },
         output: "export",
         basePath: "/Im-Not-Like-Other-Playlists",
